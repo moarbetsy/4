@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter:wght@400;500;600;700" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>UnderBrowser Dashboard</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              'neutral': {
+                950: '#111111',
+                900: '#171717',
+                800: '#262626',
+                700: '#404040',
+                600: '#525252',
+                500: '#737373',
+                400: '#a3a3a3',
+                300: '#d4d4d4',
+                200: '#e5e5e5',
+                100: '#f5f5f5',
+              }
+            }
+          },
+        },
+      }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style type="text/tailwindcss">
+      .form-checkbox {
+        appearance: none;
+        -webkit-appearance: none;
+        height: 1.2rem;
+        width: 1.2rem;
+        background-color: #0d1117;
+        border: 1px solid #30363d;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: inset 0 0 0 1px rgba(13, 17, 23, 0.35);
+        transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+      .form-checkbox:hover {
+        border-color: #8b949e;
+      }
+      .form-checkbox:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.45);
+        border-color: #8b949e;
+      }
+      .form-checkbox::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 12px;
+        border-right: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        top: 50%;
+        left: 50%;
+        transform: translate(-45%, -60%) rotate(45deg) scale(0.75);
+        transition: border-color 0.25s ease-in-out, transform 0.25s ease-in-out;
+      }
+      .form-checkbox:checked {
+        background-color: #238636;
+        border-color: #2ea043;
+        box-shadow: 0 0 0 2px rgba(35, 134, 54, 0.35);
+      }
+      .form-checkbox:checked::after {
+        border-color: #ffffff;
+        transform: translate(-45%, -60%) rotate(45deg) scale(0.85);
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background-color: #238636;
+        border: 1px solid #2ea043;
+        border-radius: 0.5rem;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        box-shadow: 0 4px 14px rgba(35, 134, 54, 0.25);
+      }
+      .btn-primary:hover {
+        background-color: #2ea043;
+        border-color: #3fb950;
+        transform: translateY(-1px);
+      }
+      .btn-primary:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(35, 134, 54, 0.3);
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background-color: #21262d;
+        border: 1px solid #30363d;
+        border-radius: 0.45rem;
+        color: #c9d1d9;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+      }
+      .btn-secondary:hover:not(:disabled) {
+        background-color: #30363d;
+        border-color: #8b949e;
+        color: #ffffff;
+      }
+      .btn-secondary:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.45);
+      }
+      .btn-secondary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .btn-danger {
+        color: #f85149;
+        transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+      }
+      .btn-danger:hover:not(:disabled) {
+        background-color: #f78166;
+        border-color: #f78166;
+        color: #0d1117;
+      }
+
+      .table-panel {
+        border: 1px solid #30363d;
+        border-radius: 0.75rem;
+        background-color: #161b22;
+        overflow: hidden;
+      }
+      .table-head {
+        background-color: #0d1117;
+      }
+      .table-head th {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #8b949e;
+      }
+      .table-body {
+        background-color: #161b22;
+      }
+      .table-row {
+        transition: background-color 0.2s ease-in-out;
+      }
+      .table-row:hover {
+        background-color: rgba(201, 209, 217, 0.05);
+      }
+      .table-cell {
+        padding: 0.75rem 1.5rem;
+        border-top: 1px solid #30363d;
+        vertical-align: middle;
+      }
+      .table-row:first-child .table-cell {
+        border-top: none;
+      }
+      .table-cell--checkbox {
+        width: 3.5rem;
+      }
+      .gh-text-strong {
+        color: #f0f6fc;
+      }
+      .gh-text-muted {
+        color: #8b949e;
+      }
+      .gh-text-success {
+        color: #3fb950;
+      }
+      .status-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 9999px;
+        display: inline-block;
+      }
+      .status-dot--active {
+        background-color: #3fb950;
+        box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.25);
+      }
+      .status-dot--inactive {
+        background-color: #6e7681;
+        box-shadow: 0 0 0 2px rgba(110, 118, 129, 0.2);
+      }
+    </style>
+</head>
+<body class="font-sans bg-[#0d1117] text-[#c9d1d9]">
+<div class="flex h-screen w-full flex-col">
+<header class="flex shrink-0 items-center px-6 sm:px-10 py-4 border-b border-[#30363d] bg-[#0d1117]">
+<div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-6">
+<div class="flex items-center gap-3">
+<svg class="h-8 w-8 sm:h-9 sm:w-9 text-[#f0f6fc]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_330)">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_330">
+<rect fill="white" height="48" width="48"></rect>
+</clipPath>
+</defs>
+</svg>
+<h1 class="text-[2.25rem] font-semibold leading-none tracking-tight text-[#f0f6fc] sm:text-[2.375rem]">UnderBrowser</h1>
+</div>
+<div class="flex items-center gap-4">
+<button id="add-profile-btn" class="btn-primary text-sm">
+<span class="material-symbols-outlined text-xl">person_add</span>
+<span class="tracking-wide">New Profile</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-6 sm:p-10">
+<div class="mx-auto max-w-7xl">
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+<div class="flex items-center gap-4">
+<button id="launch-selected-btn" class="btn-secondary text-sm" disabled="">
+<span class="material-symbols-outlined text-base">rocket_launch</span>
+<span>Launch</span>
+</button>
+<button id="delete-selected-btn" class="btn-secondary btn-danger text-sm" disabled="">
+<span class="material-symbols-outlined text-base">delete</span>
+<span>Delete</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-full max-w-xs">
+<label class="sr-only" for="search-input">Search</label>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#8b949e]">search</span>
+<input id="search-input" class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 pl-10 pr-4 text-sm text-[#c9d1d9] placeholder:text-[#8b949e] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]" placeholder="Search" type="search"/>
+</div>
+</div>
+</div>
+<div class="table-panel">
+<table class="min-w-full">
+<thead class="table-head">
+<tr>
+<th class="px-6 py-3 text-left" scope="col">
+<label class="sr-only" for="select-all-checkbox">Select all profiles</label>
+<input id="select-all-checkbox" class="form-checkbox" type="checkbox"/>
+</th>
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider gh-text-muted" scope="col">Profile</th>
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider gh-text-muted" scope="col">Screen Mode</th>
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider gh-text-muted" scope="col">Proxy</th>
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider gh-text-muted" scope="col">OS</th>
+<th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider gh-text-muted" scope="col">Status</th>
+</tr>
+</thead>
+<tbody id="profiles-table-body" class="table-body">
+<!-- Profiles will be dynamically loaded here -->
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+
+<!-- Add Profile Modal -->
+<div id="add-profile-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+<div class="bg-[#161b22] rounded-lg border border-[#30363d] p-6 w-full max-w-2xl mx-4 shadow-xl shadow-black/40 max-h-[90vh] overflow-y-auto">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-semibold text-[#f0f6fc]">Add New Profile</h2>
+<button id="close-modal-btn" class="text-[#8b949e] hover:text-[#f0f6fc]">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form id="add-profile-form">
+<div class="space-y-6">
+<!-- Basic Profile Info -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label for="profile-name" class="block text-sm font-medium text-[#8b949e] mb-1">Profile Name</label>
+<input type="text" id="profile-name" name="name" required class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 px-3 text-sm text-[#c9d1d9] placeholder:text-[#6e7681] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]" placeholder="Enter profile name">
+</div>
+<div>
+<label for="profile-timezone" class="block text-sm font-medium text-[#8b949e] mb-1">Timezone</label>
+<select id="profile-timezone" name="timezone" required class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 px-3 text-sm text-[#c9d1d9] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]">
+<option value="">Select Timezone</option>
+<option value="GMT-12:00">GMT-12:00</option>
+<option value="GMT-11:00">GMT-11:00</option>
+<option value="GMT-10:00">GMT-10:00</option>
+<option value="GMT-09:00">GMT-09:00</option>
+<option value="GMT-08:00">GMT-08:00</option>
+<option value="GMT-07:00">GMT-07:00</option>
+<option value="GMT-06:00">GMT-06:00</option>
+<option value="GMT-05:00">GMT-05:00</option>
+<option value="GMT-04:00">GMT-04:00</option>
+<option value="GMT-03:00">GMT-03:00</option>
+<option value="GMT-02:00">GMT-02:00</option>
+<option value="GMT-01:00">GMT-01:00</option>
+<option value="GMT+00:00">GMT+00:00</option>
+<option value="GMT+01:00">GMT+01:00</option>
+<option value="GMT+02:00">GMT+02:00</option>
+<option value="GMT+03:00">GMT+03:00</option>
+<option value="GMT+04:00">GMT+04:00</option>
+<option value="GMT+05:00">GMT+05:00</option>
+<option value="GMT+06:00">GMT+06:00</option>
+<option value="GMT+07:00">GMT+07:00</option>
+<option value="GMT+08:00">GMT+08:00</option>
+<option value="GMT+09:00">GMT+09:00</option>
+<option value="GMT+10:00">GMT+10:00</option>
+<option value="GMT+11:00">GMT+11:00</option>
+<option value="GMT+12:00">GMT+12:00</option>
+</select>
+</div>
+</div>
+
+<!-- Screen Configuration -->
+<div class="border border-[#30363d] rounded-lg p-4">
+<h3 class="text-sm font-semibold text-[#f0f6fc] mb-3">Screen Configuration</h3>
+<div class="space-y-3">
+<div>
+<label for="screen-mode" class="block text-sm font-medium text-[#8b949e] mb-1">Screen Mode</label>
+<select id="screen-mode" name="screen_mode" class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 px-3 text-sm text-[#c9d1d9] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]">
+<option value="random_session">Random per session</option>
+<option value="fixed_profile">Fixed per profile</option>
+<option value="custom_distribution">Custom distribution</option>
+</select>
+<p class="text-xs text-[#6e7681] mt-1">Choose how screen sizes are selected for this profile</p>
+</div>
+
+<!-- Fixed Screen Configuration (hidden by default) -->
+<div id="fixed-screen-config" class="hidden">
+<label class="block text-sm font-medium text-[#8b949e] mb-2">Fixed Screen Size</label>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<input type="number" id="fixed-screen-width" name="fixed_screen_width" placeholder="Screen Width" class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 px-3 text-sm text-[#c9d1d9] placeholder:text-[#6e7681] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]">
+</div>
+<div>
+<input type="number" id="fixed-screen-height" name="fixed_screen_height" placeholder="Screen Height" class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 px-3 text-sm text-[#c9d1d9] placeholder:text-[#6e7681] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]">
+</div>
+</div>
+</div>
+
+<!-- Custom Distribution Configuration (hidden by default) -->
+<div id="custom-distribution-config" class="hidden">
+<label class="block text-sm font-medium text-[#8b949e] mb-2">Screen Size Distribution</label>
+<div id="distribution-list" class="space-y-2">
+<!-- Distribution items will be added dynamically -->
+</div>
+<button type="button" id="add-distribution-btn" class="btn-secondary text-xs mt-2">
+<span class="material-symbols-outlined text-sm">add</span>
+Add Screen Size
+</button>
+</div>
+</div>
+</div>
+
+<!-- Proxy Configuration -->
+<div class="border border-[#30363d] rounded-lg p-4">
+<h3 class="text-sm font-semibold text-[#f0f6fc] mb-3">Proxy Configuration</h3>
+<div class="space-y-3">
+<div>
+<label for="proxy-url" class="block text-sm font-medium text-[#8b949e] mb-1">Proxy URL (Optional)</label>
+<input type="text" id="proxy-url" name="proxy_url" class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 px-3 text-sm text-[#c9d1d9] placeholder:text-[#6e7681] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]" placeholder="http://username:password@proxy.example.com:8080">
+<p class="text-xs text-[#6e7681] mt-1">Format: protocol://username:password@host:port</p>
+</div>
+<div id="proxy-validation-result" class="hidden">
+<!-- Proxy validation results will appear here -->
+</div>
+</div>
+</div>
+
+<!-- OS Configuration -->
+<div class="border border-[#30363d] rounded-lg p-4">
+<h3 class="text-sm font-semibold text-[#f0f6fc] mb-3">Operating System</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<input type="checkbox" id="use-host-os" name="use_host_os" class="form-checkbox" checked>
+<label for="use-host-os" class="text-sm text-[#c9d1d9]">Use host OS detection</label>
+</div>
+<div id="os-override-section" class="hidden">
+<label for="os-override" class="block text-sm font-medium text-[#8b949e] mb-1">Override OS</label>
+<select id="os-override" name="os_override" class="w-full rounded-md border border-[#30363d] bg-[#0d1117] py-2 px-3 text-sm text-[#c9d1d9] transition-all duration-200 ease-in-out focus:border-[#58a6ff] focus:outline-none focus:ring-0 focus:shadow-[0_0_0_2px_rgba(56,139,253,0.35)]">
+<option value="">Select OS Override</option>
+<option value="windows">Windows</option>
+<option value="macos">macOS</option>
+<option value="linux">Linux</option>
+</select>
+</div>
+<div id="host-os-info" class="text-xs text-[#6e7681]">
+<!-- Host OS info will be loaded here -->
+</div>
+</div>
+</div>
+
+<!-- Advanced Options -->
+<div class="border border-[#30363d] rounded-lg p-4">
+<h3 class="text-sm font-semibold text-[#f0f6fc] mb-3">Advanced Options</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center gap-3">
+<input type="checkbox" id="humanize" name="humanize" class="form-checkbox" checked>
+<label for="humanize" class="text-sm text-[#c9d1d9]">Enable humanization</label>
+</div>
+<div class="flex items-center gap-3">
+<input type="checkbox" id="headless" name="headless" class="form-checkbox">
+<label for="headless" class="text-sm text-[#c9d1d9]">Headless mode</label>
+</div>
+</div>
+</div>
+</div>
+
+<div class="flex justify-end gap-3 mt-6">
+<button type="button" id="cancel-btn" class="btn-secondary text-sm">
+Cancel
+</button>
+<button type="submit" class="btn-primary text-sm">
+Create Profile
+</button>
+</div>
+</form>
+</div>
+</div>
+
+<script src="/static/app_enhanced.js"></script>
+</body></html>
